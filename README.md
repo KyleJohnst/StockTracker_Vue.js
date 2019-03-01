@@ -1,6 +1,6 @@
-# client
+# Stocks tracking app
 
-> A Vue.js project
+> A Vue.js project to track stocks. s
 
 ## Build Setup
 
