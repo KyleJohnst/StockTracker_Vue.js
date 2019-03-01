@@ -1,17 +1,34 @@
 <template>
   <div id="app">
-    <h1>{{ msg }}</h1>
+    <h1>DEVELOPMENT</h1>
+    <h1>Welcome to your Stock Portfolio</h1>
     <h2>Select your stock</h2>
-    <p>DEVELOPMENT</p>
+
+      <stock-view :stocks="stocks"/>
   </div>
 </template>
 
 <script>
+import StockView from './components/StockView';
+
 export default {
   name: 'app',
   data () {
     return {
-      msg: 'Welcome to Your Stocks Portfolio'
+      stocks: []
+    }
+  },
+  components:{
+    StockView
+  },
+  mounted(){
+    this.fetchStocks();
+  },
+  methods: {
+    fetchStocks(){
+      fetch("http://localhost:3000/api/stocks")
+      .then(res => res.json())
+      .then(stocks => this.stocks = stocks);
     }
   }
 }
