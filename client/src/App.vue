@@ -5,30 +5,42 @@
     <h2>Select your stock</h2>
 
       <stock-view :stocks="stocks"/>
+      <stock-prices />
   </div>
 </template>
 
 <script>
 import StockView from './components/StockView';
+import StockPrices from './components/StockPrices';
+import {eventBus} from './main';
 
 export default {
   name: 'app',
   data () {
     return {
-      stocks: []
+      stocks: [],
+      apiCall: null
     }
   },
   components:{
-    StockView
+    StockView,
+    StockPrices
   },
   mounted(){
     this.fetchStocks();
+
+    eventBus.$on('stock-selected', (apiCall) => {
+      this.callStock(apiCall)
+    })
   },
   methods: {
     fetchStocks(){
       fetch("http://localhost:3000/api/stocks")
       .then(res => res.json())
       .then(stocks => this.stocks = stocks);
+    },
+    callStock(apiCall) {
+      this.apiCall = apiCall
     }
   }
 }
