@@ -17,11 +17,10 @@ export default {
       for (stock of this.stocks){
         total += stock.quantity * stock.closingPrice
       }
-      // console.log(total);
       return total;
     }
-    }
   }
+}
 </script>
 
 <style lang="css" scoped>
