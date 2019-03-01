@@ -10,8 +10,10 @@
 <script>
 export default {
   name: 'StockView',
-  props: ['stocks']
+  props: ['stocks'],
+
 }
+
 </script>
 
 <style lang="css" scoped>
