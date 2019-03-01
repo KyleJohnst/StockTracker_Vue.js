@@ -1,11 +1,14 @@
 <template lang="html">
   <div class="">
     <label for="stock_select">Choose a Stock</label>
-    <select id="stock_select" v-model="apiCall" v-on:change="changeStock">
+    <select id="stock_select" v-model="apiCall" v-on:change="changeStock" >
       <option value=disabled></option>
       <option value="AAPL">Apple Stocks (AAPL)</option>
       <option value="GOOG">Google Stocks (GOOG)</option>
     </select>
+    <div class="">
+
+    </div>
   </div>
 </template>
 
@@ -14,6 +17,8 @@ import {eventBus} from '../main';
 
 export default {
   name: 'stockPrices',
+  props: ['currentStocks'],
+
   data(){
     return {
       apiCall: null
@@ -21,7 +26,7 @@ export default {
   },
   methods: {
     changeStock(){
-      console.log(this.apiCall);
+      // console.log(this.apiCall);
       eventBus.$emit('stock-selected', this.apiCall)
     }
   }

@@ -1,7 +1,7 @@
 <template lang="html">
   <div class="">
     <ul v-for="stock in stocks">
-      <li><p>Your {{ stock.stockName }} shareprice is ${{ stock.closingPrice }} and you have {{ stock.quantity }} with a value of ${{ stock.quantity * stock.closingPrice }}</p></li>
+      <li><p>Your {{ stock.stockName }} shareprice is ${{ stock.closingPrice }} and you have {{ stock.quantity }} shares with the total value of ${{ stock.quantity * stock.closingPrice }}</p></li>
     </ul>
     <p>Your total Portfolio value is ${{totalValue}}</p>
   </div>

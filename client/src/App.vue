@@ -43,10 +43,14 @@ export default {
     callStock(apiCall) {
       this.apiCall = apiCall
       let stock = this.apiCall
-      const key = '&interval=5min&apikey=JUSZH2FOEHQR49T8'
-      fetch('https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=' + stock + key)
+      const key = '&apikey=JUSZH2FOEHQR49T8'
+      fetch('https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=' + stock + key)
       .then(res => res.json())
-      .then(currentStocks => this.currentStocks = currentStocks);
+      .then(result => {
+        var a = result['Time Series (Daily)']
+        var finalKey = Object.keys(a).pop()
+        this.currentStocks = a[finalKey]['4. close']
+      })
     }
   }
 }
