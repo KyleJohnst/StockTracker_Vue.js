@@ -2,6 +2,7 @@
   <div id="app">
     <h1>{{ msg }}</h1>
     <h2>Select your stock</h2>
+    <p>DEVELOPMENT</p>
   </div>
 </template>
 
