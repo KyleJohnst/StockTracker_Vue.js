@@ -19,7 +19,8 @@ export default {
   data () {
     return {
       stocks: [],
-      apiCall: null
+      apiCall: null,
+      currentStocks: []
     }
   },
   components:{
@@ -41,6 +42,11 @@ export default {
     },
     callStock(apiCall) {
       this.apiCall = apiCall
+      let stock = this.apiCall
+      const key = '&interval=5min&apikey=JUSZH2FOEHQR49T8'
+      fetch('https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=' + stock + key)
+      .then(res => res.json())
+      .then(currentStocks => this.currentStocks = currentStocks);
     }
   }
 }
