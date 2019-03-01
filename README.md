@@ -1,6 +1,6 @@
 # Stocks tracking app
 
-> A Vue.js project to track stocks. s
+> A Vue.js project to track stocks.
 
 ## Build Setup
 
