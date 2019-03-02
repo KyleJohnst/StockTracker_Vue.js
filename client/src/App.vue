@@ -6,6 +6,7 @@
 
       <stock-view :stocks="stocks"/>
       <stock-prices />
+      <button v-on:click="getUniqueStocks" name="button">GET ME NAMES</button>
   </div>
 </template>
 
@@ -14,13 +15,15 @@ import StockView from './components/StockView';
 import StockPrices from './components/StockPrices';
 import {eventBus} from './main';
 
+
 export default {
   name: 'app',
   data () {
     return {
       stocks: [],
       apiCall: null,
-      currentStocks: []
+      currentStockPrice: null,
+      uniqueStocks: null
     }
   },
   components:{
@@ -49,10 +52,13 @@ export default {
       .then(result => {
         var a = result['Time Series (Daily)']
         var finalKey = Object.keys(a).pop()
-        this.currentStocks = a[finalKey]['4. close']
+        this.currentStockPrice = a[finalKey]['4. close']
       })
-    }
+    },
+    getUniqueStocks(){
+      this.uniqueStocks = [...new Set(this.stocks.map(purchase => purchase.stockName))]
   }
+}
 }
 </script>
 

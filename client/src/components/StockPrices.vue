@@ -1,6 +1,5 @@
 <template lang="html">
   <div class="">
-    <label for="stock_select">Choose a Stock</label>
     <select id="stock_select" v-model="apiCall" v-on:change="changeStock" >
       <option value=disabled></option>
       <option value="AAPL">Apple Stocks (AAPL)</option>

@@ -12,9 +12,9 @@ export default {
   name: 'StockView',
   props: ['stocks'],
   computed: {
-    totalValue: function(stock) {
+    totalValue: function() {
       let total = 0;
-      for (stock of this.stocks){
+      for (var stock of this.stocks){
         total += stock.quantity * stock.closingPrice
       }
       return total;
