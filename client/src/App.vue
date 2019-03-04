@@ -3,6 +3,7 @@
     <h1>Welcome to your Stock Portfolio</h1>
     <h2>Select your stock</h2>
     <buy-stocks :items='items'/>
+    <!-- <test :items='items' /> -->
     <stock-view :stocks="stocks"/>
     <stock-prices />
     <button v-on:click="groupEachStock" name="button">GET ME Groups</button>
@@ -15,6 +16,7 @@
 import StockView from './components/StockView';
 import StockPrices from './components/StockPrices';
 import BuyStocks from './components/BuyStocks';
+// import Test from './components/Test'
 import {eventBus} from './main';
 
 export default {
