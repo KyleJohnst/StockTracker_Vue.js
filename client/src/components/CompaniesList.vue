@@ -1,31 +1,33 @@
 <template lang="html">
-  <select class="stocksList">
-    <option v-for="item in items" :key="item['Symbol']" v-on:change="">{{ item['Name'] + ':' + ' ' + item['Symbol'] }}</option>
-  </select>
+  <div class="stocksList">
+    <select v-on:change="handleClick" v-model="selectedCompany">
+      <option v-for="company in companies">{{ company['Name'] + ':' + ' ' + company['Symbol'] }}</option>
+    </select>
+  </div>
 </template>
 
 <script>
+import CompanyDetail from './CompanyDetail';
 import {eventBus} from '../main.js';
 
 export default {
-  name: 'buyStocks',
-  props: ['items', 'selectedItem'],
+  name: 'companies-list',
+  props: ['companies'],
   date () {
     return {
-      item: [],
-      selectedItem: 0
+      selectedCompany: ''
     }
   },
   methods: {
-    getStockDetail(item) {
+    getCompanyDetail() {
       fetch('https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=' + symbol + key)
       .then(res => res.json())
-      .then(items => {
-        this.items = items
+      .then(companies => {
+        this.companies = companies
       })
     },
     handleClick() {
-      eventBus.$emit('selected-item', this.selectedItem[this['Symbol']]);
+      eventBus.$emit('selected-company', this.companies[this['Symbol']]);
     }
   },
   mounted() {
