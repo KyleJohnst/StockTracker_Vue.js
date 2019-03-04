@@ -1,13 +1,12 @@
 <template>
   <div id="app">
-    <h1>DEVELOPMENT</h1>
     <h1>Welcome to your Stock Portfolio</h1>
     <h2>Select your stock</h2>
-
-      <stock-view :stocks="stocks"/>
-      <stock-prices />
-      <button v-on:click="groupEachStock" name="button">GET ME Groups</button>
-      <button v-on:click="totalEachStock" name="button">GET ME TOTALS!!!</button>
+    <buy-stocks :items='items'/>
+    <stock-view :stocks="stocks"/>
+    <stock-prices />
+    <button v-on:click="groupEachStock" name="button">GET ME Groups</button>
+    <button v-on:click="totalEachStock" name="button">GET ME TOTALS!!!</button>
 
   </div>
 </template>
@@ -15,8 +14,8 @@
 <script>
 import StockView from './components/StockView';
 import StockPrices from './components/StockPrices';
+import BuyStocks from './components/BuyStocks';
 import {eventBus} from './main';
-
 
 export default {
   name: 'app',
@@ -26,15 +25,18 @@ export default {
       apiCall: null,
       currentStockPrice: null,
       groupedTotals: null,
-      groupedStocks: null
+      groupedStocks: null,
+      items: []
     }
   },
   components:{
     StockView,
-    StockPrices
+    StockPrices,
+    BuyStocks
   },
   mounted(){
     this.fetchStocks();
+    this.getList();
 
     eventBus.$on('stock-selected', (apiCall) => {
       this.callStock(apiCall)
@@ -81,10 +83,14 @@ export default {
         results[key] = orderArray.reduce((runningTotal, order) => { return runningTotal + order.quantity}, 0)
       }
       this.groupedTotals = results
+    },
+    getList() {
+      fetch('https://pkgstore.datahub.io/core/s-and-p-500-companies/constituents_json/data/64dd3e9582b936b0352fdd826ecd3c95/constituents_json.json')
+      .then(res => res.json())
+      .then(items => this.items = items)
     }
   }
 }
-
 </script>
 
 <style>
