@@ -8,6 +8,8 @@
       <stock-prices />
       <button v-on:click="groupEachStock" name="button">GET ME Groups</button>
       <button v-on:click="totalEachStock" name="button">GET ME TOTALS!!!</button>
+      <!-- <button v-on:click="" name="button">Give me a Graph!</button> -->
+      <graph-data v-if="groupedTotals" :groupedTotals="groupedTotals"></graph-data>
 
   </div>
 </template>
@@ -15,6 +17,7 @@
 <script>
 import StockView from './components/StockView';
 import StockPrices from './components/StockPrices';
+import GraphData from './components/GraphData';
 import {eventBus} from './main';
 
 
@@ -31,7 +34,8 @@ export default {
   },
   components:{
     StockView,
-    StockPrices
+    StockPrices,
+    GraphData
   },
   mounted(){
     this.fetchStocks();

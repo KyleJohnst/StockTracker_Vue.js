@@ -22,7 +22,7 @@ import { Gchart } from 'vue-google-charts';
 
 export default {
   name: 'GraphData',
-  props: ['stocks'],
+  props: ['groupedTotals'],
   components: {
     Gchart
   },
@@ -49,22 +49,9 @@ export default {
 },
 computed: {
   createChartData(){
-    let data = [];
-    // var data = this.stocks.map(stock => Object.entries(stock));
-    // // data[0] = Object.keys(this.stocks);
-    // data.forEach(stock => {
-    //   let key = stock[0]
-    //   let value = stock[1]
-    //   this.chartData = data
-    // });
-    data.push(this.stocks.map(name => name.stockName));
-    data.push(this.stocks.map(price => price.closingPrice));
-    data.push(this.stocks.map(quantity => quantity.quantity));
-    this.chartData = data
-
-
+    this.chartData = [["Symbol", "Amount"], ...Object.entries(this.groupedTotals)]
+    }
   }
-}
 }
 </script>
 
