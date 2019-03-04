@@ -6,7 +6,9 @@
 
       <stock-view :stocks="stocks"/>
       <stock-prices />
-      <button v-on:click="getUniqueStocks" name="button">GET ME NAMES</button>
+      <button v-on:click="groupEachStock" name="button">GET ME Groups</button>
+      <button v-on:click="totalEachStock" name="button">GET ME TOTALS!!!</button>
+
   </div>
 </template>
 
@@ -23,7 +25,8 @@ export default {
       stocks: [],
       apiCall: null,
       currentStockPrice: null,
-      uniqueStocks: null
+      groupedTotals: null,
+      groupedStocks: null
     }
   },
   components:{
@@ -55,11 +58,33 @@ export default {
         this.currentStockPrice = a[finalKey]['4. close']
       })
     },
-    getUniqueStocks(){
-      this.uniqueStocks = [...new Set(this.stocks.map(purchase => purchase.stockName))]
+    groupEachStock(){
+      var orders = this.stocks;
+      function groupBy(objectArray, property) {
+        return objectArray.reduce(function (acc, obj) {
+          var key = obj[property];
+          if (!acc[key]) {
+            acc[key] = [];
+          }
+          acc[key].push(obj);
+          return acc;
+        }, {});
+      }
+      var result = groupBy(orders, 'stockName');
+      this.groupedStocks = result
+    },
+    totalEachStock(){
+      let orders = this.groupedStocks
+      let results = {};
+      for(let key in orders){
+        let orderArray = orders[key];
+        results[key] = orderArray.reduce((runningTotal, order) => { return runningTotal + order.quantity}, 0)
+      }
+      this.groupedTotals = results
+    }
   }
 }
-}
+
 </script>
 
 <style>
