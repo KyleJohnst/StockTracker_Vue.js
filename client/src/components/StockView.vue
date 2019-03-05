@@ -3,7 +3,7 @@
     <ul v-for="stock in stocks">
       <li><p>Your {{ stock.stockName }} shareprice is ${{ stock.closingPrice }} and you have {{ stock.quantity }} shares with a total purchase  value of ${{ stock.quantity * stock.closingPrice }}</p></li>
     </ul>
-    <p>Your total Portfolio value is ${{totalValue}}</p>
+    <p>Your total Portfolio value is $</p>
   </div>
 </template>
 
@@ -11,8 +11,8 @@
 export default {
   name: 'StockView',
   props: ['stocks', 'groupedTotals'],
-  computed: {
-    totalValue: function() {
+  // computed: {
+  //   totalValue: function() {
       // var total = 0;
       // var requestList = this.groupedTotals;
       //
@@ -29,8 +29,8 @@ export default {
       //   console.log(total);
       //   return total
       // }
-    }
-  }
+    // }
+  // }
 }
 </script>
 

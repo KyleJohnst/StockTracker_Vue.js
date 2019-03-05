@@ -6,8 +6,8 @@
 
     <stock-view :stocks="stocks"/>
     <stock-prices />
-    <button v-on:click="groupEachStock" name="button">GET ME Groups</button>
-    <button v-on:click="totalEachStock" name="button">GET ME TOTALS!!!</button>
+    <!-- <button v-on:click="groupEachStock" name="button">GET ME Groups</button>
+    <button v-on:click="totalEachStock" name="button">GET ME TOTALS!!!</button> -->
 
     <graph-data v-if="groupedTotals" :groupedTotals="groupedTotals"></graph-data>
 
@@ -39,16 +39,26 @@ export default {
     StockPrices,
     GraphData
   },
-  mounted(){
-    this.fetchStocks();
+  mounted () {
+
+    this.fetchStocks()
+    .then(gstock => this.groupEachStock())
+    .then(tstock => this.totalEachStock())
+    Promise.all([this.groupEachStock(), this.totalEachStock()])
+    .then(result => {
+      return result
+    })
+    // .then(responses => Promise.all(responses.map(res => res.json())))
+
 
     eventBus.$on('stock-selected', (apiCall) => {
       this.callStock(apiCall)
     })
+
   },
   methods: {
     fetchStocks(){
-      fetch("http://localhost:3000/api/stocks")
+      return fetch("http://localhost:3000/api/stocks")
       .then(res => res.json())
       .then(stocks => this.stocks = stocks);
     },
