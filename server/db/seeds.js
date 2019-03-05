@@ -4,22 +4,22 @@ db.dropDatabase();
 db.stocks.insertMany([
   {
     stockName: 'GOOG',
-    closingPrice: 1124,
-    quantity: 5
+    closingPrice: 10,
+    quantity: 15
+  },
+  {
+    stockName: 'GOOG',
+    closingPrice: 15,
+    quantity: 20
   },
   {
     stockName: 'AAPL',
-    closingPrice: 174,
-    quantity: 2
+    closingPrice: 15,
+    quantity: 10
   },
   {
     stockName: 'MSFT',
-    closingPrice: 113,
-    quantity: 89
-  },
-  {
-    stockName: 'AMZN',
-    closingPrice: 1646,
-    quantity: 5
+    closingPrice: 5,
+    quantity: 10
   }
 ])
