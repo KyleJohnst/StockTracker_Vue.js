@@ -1,14 +1,11 @@
 <template>
   <div id="app">
-    <h1>DEVELOPMENT</h1>
+    <h1>BUY BUY BUY</h1>
     <h1>Welcome to your Stock Portfolio</h1>
     <h2>Select your stock</h2>
 
     <stock-view :stocks="stocks"/>
     <stock-prices />
-    <!-- <button v-on:click="groupEachStock" name="button">GET ME Groups</button>
-    <button v-on:click="totalEachStock" name="button">GET ME TOTALS!!!</button> -->
-
     <graph-data v-if="groupedTotals" :groupedTotals="groupedTotals"></graph-data>
 
 
@@ -40,7 +37,6 @@ export default {
     GraphData
   },
   mounted () {
-
     this.fetchStocks()
     .then(gstock => this.groupEachStock())
     .then(tstock => this.totalEachStock())
@@ -48,13 +44,9 @@ export default {
     .then(result => {
       return result
     })
-    // .then(responses => Promise.all(responses.map(res => res.json())))
-
-
     eventBus.$on('stock-selected', (apiCall) => {
       this.callStock(apiCall)
     })
-
   },
   methods: {
     fetchStocks(){
@@ -72,11 +64,8 @@ export default {
         var a = result['Time Series (Daily)']
         var finalKey = Object.keys(a).shift()
         this.currentStockPrice = a[finalKey]['4. close']
-        // var thingy = a[finalKey]['4. close']
-        // console.log(thingy);
       })
     },
-
     groupEachStock(){
       var orders = this.stocks;
       function groupBy(objectArray, property) {
@@ -92,7 +81,6 @@ export default {
       var result = groupBy(orders, 'stockName');
       this.groupedStocks = result
     },
-
     totalEachStock(){
       let orders = this.groupedStocks
       let results = {};
@@ -101,9 +89,7 @@ export default {
         results[key] = orderArray.reduce((runningTotal, order) => { return runningTotal + order.quantity}, 0)
       }
       this.groupedTotals = results
-      console.log(results);
     },
-
     totalPortfolio(){
       var total = 0;
       var requestList = this.groupedTotals;
@@ -117,13 +103,9 @@ export default {
           var price = a[finalKey]['4. close']
           var value = price * requestList[stock]
           total += value
-          // debugger;
-          console.log(total);
-        })
+        });
       }
     }
-
-
   }
 }
 
