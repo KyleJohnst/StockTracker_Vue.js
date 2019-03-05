@@ -4,7 +4,7 @@
     <h1>Welcome to your Stock Portfolio</h1>
     <h2>Select your stock</h2>
 
-    <stock-view :stocks="stocks"/>
+    <stock-view :stocks="stocks" :totalStockValue="totalStockValue"/>
     <stock-prices />
     <!-- <button v-on:click="groupEachStock" name="button">GET ME Groups</button>
     <button v-on:click="totalEachStock" name="button">GET ME TOTALS!!!</button> -->
@@ -31,7 +31,7 @@ export default {
       currentStockPrice: null,
       groupedTotals: null,
       groupedStocks: null,
-      totalStockValue: []
+      totalStockValue: 0
     }
   },
   components:{
@@ -44,7 +44,8 @@ export default {
     this.fetchStocks()
     .then(gstock => this.groupEachStock())
     .then(tstock => this.totalEachStock())
-    Promise.all([this.groupEachStock(), this.totalEachStock()])
+    .then(svalue => this.totalPortfolio())
+    Promise.all([this.groupEachStock(), this.totalEachStock(), this.totalPortfolio()])
     .then(result => {
       return result
     })
@@ -72,8 +73,6 @@ export default {
         var a = result['Time Series (Daily)']
         var finalKey = Object.keys(a).shift()
         this.currentStockPrice = a[finalKey]['4. close']
-        // var thingy = a[finalKey]['4. close']
-        // console.log(thingy);
       })
     },
 
@@ -117,12 +116,24 @@ export default {
           var price = a[finalKey]['4. close']
           var value = price * requestList[stock]
           total += value
-          // debugger;
-          console.log(total);
+          this.totalStockValue = total.toFixed(2)
         })
       }
-    }
+    },
 
+    totalPercentage(totalPortfolio) {
+      let initialValue = 0;
+      let currentValue = this.totalPortfolio
+      for (var stock of this.stocks){
+        initialValue += stock.quantity * stock.closingPrice
+      }
+
+      function percentage(initValue, currValue){
+        let increase = currValue - initValue
+        let x = ((increase / initValue) * 100).toFixed(2)
+        console.log(x);
+      }
+    }
 
   }
 }
