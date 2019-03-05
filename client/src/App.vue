@@ -1,17 +1,12 @@
 <template>
   <div id="app">
-
     <h1>Welcome to your Stock Portfolio</h1>
-    <h2>Select a stock</h2>
-    <companies-list :companies='companies' />
-    <company-detail v-on:change="callStock" :company='selectedCompany' />
-    <stock-view :stocks='stocks' />
+    <h2>Select your stock</h2>
+    <stock-view :stocks="stocks"/>
     <stock-prices />
-    <button v-on:click="groupEachStock" name="button">GET ME Groups</button>
-    <button v-on:click="totalEachStock" name="button">GET ME TOTALS!!!</button>
+    <graph-data v-if="groupedTotals" :groupedTotals="groupedTotals"></graph-data>
 
   </div>
-
 </template>
 
 <script>
@@ -19,6 +14,7 @@ import StockView from './components/StockView';
 import StockPrices from './components/StockPrices';
 import CompaniesList from './components/CompaniesList';
 import CompanyDetail from './components/CompanyDetail';
+import GraphData from './components/GraphData';
 import {eventBus} from './main';
 
 export default {
@@ -31,18 +27,29 @@ export default {
       groupedTotals: null,
       groupedStocks: null,
       companies: [],
-      selectedCompany: null
+      selectedCompany: null,
+      totalStockValue: []
     }
   },
   components:{
     StockView,
     StockPrices,
     CompaniesList,
-    CompanyDetail
+    CompanyDetail,
+    GraphData
   },
   mounted(){
-    this.fetchStocks();
+
+  },
+  mounted () {
     this.getCompaniesList();
+    this.fetchStocks()
+    .then(gstock => this.groupEachStock())
+    .then(tstock => this.totalEachStock())
+    Promise.all([this.groupEachStock(), this.totalEachStock()])
+    .then(result => {
+      return result
+    })
 
     eventBus.$on('selected-company', (selectedCompany) => {
       this.selectedCompany = selectedCompany
@@ -51,10 +58,11 @@ export default {
     eventBus.$on('stock-selected', (apiCall) => {
       this.callStock(apiCall)
     })
+
   },
   methods: {
     fetchStocks(){
-      fetch("http://localhost:3000/api/stocks")
+      return fetch("http://localhost:3000/api/stocks")
       .then(res => res.json())
       .then(stocks => this.stocks = stocks);
     },
@@ -71,6 +79,7 @@ export default {
         };
       })
     },
+
     groupEachStock(){
       var orders = this.stocks;
       function groupBy(objectArray, property) {
@@ -86,6 +95,7 @@ export default {
       var result = groupBy(orders, 'stockName');
       this.groupedStocks = result
     },
+
     totalEachStock(){
       let orders = this.groupedStocks
       let results = {};
@@ -99,6 +109,23 @@ export default {
       fetch('https://pkgstore.datahub.io/core/s-and-p-500-companies/constituents_json/data/64dd3e9582b936b0352fdd826ecd3c95/constituents_json.json')
       .then(res => res.json())
       .then(companies => this.companies = companies)
+    },
+
+    totalPortfolio(){
+      var total = 0;
+      var requestList = this.groupedTotals;
+
+      for(let stock in requestList) {
+        fetch(`https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${stock}&apikey=JUSZH2FOEHQR49T8`)
+        .then(res => res.json())
+        .then(result => {
+          var a = result['Time Series (Daily)']
+          var finalKey = Object.keys(a).shift()
+          var price = a[finalKey]['4. close']
+          var value = price * requestList[stock]
+          total += value
+        })
+      }
     }
   }
 }
