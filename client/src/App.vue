@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <h1>Welcome to your Stock Portfolio</h1>
-    <h2>Select your stock</h2>
+    <h2>Select a stock</h2>
     <companies-list :companies='companies' />
     <company-detail :company='selectedCompany' />
     <stock-view :stocks='stocks' />
@@ -29,7 +29,7 @@ export default {
       groupedTotals: null,
       groupedStocks: null,
       companies: [],
-      selectedCompany: []
+      selectedCompany: null
     }
   },
   components:{
@@ -42,6 +42,9 @@ export default {
     this.fetchStocks();
     this.getCompaniesList();
 
+    eventBus.$on('selected-company', (selectedCompany) => {
+      this.selectedCompany = selectedCompany
+    }),
     eventBus.$on('stock-selected', (apiCall) => {
       this.callStock(apiCall)
     })
@@ -56,7 +59,7 @@ export default {
       this.apiCall = apiCall
       let stock = this.apiCall
       const key = '&apikey=JUSZH2FOEHQR49T8'
-      fetch('https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=' + stock + key)
+      fetch('https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=' + this.selectedCompany['Symbol'] + key)
       .then(res => res.json())
       .then(result => {
         var a = result['Time Series (Daily)']
@@ -104,7 +107,7 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  margin-top: 20px;
 }
 h1, h2 {
   font-weight: normal;

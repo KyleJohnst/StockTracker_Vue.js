@@ -1,7 +1,7 @@
 <template lang="html">
   <div class="stocksList">
     <select v-on:change="handleClick" v-model="selectedCompany">
-      <option v-for="company in companies">{{ company['Name'] + ':' + ' ' + company['Symbol'] }}</option>
+      <option v-for="company in companies" :value="company">{{ company['Name'] + ':' + ' ' + company['Symbol'] }}</option>
     </select>
   </div>
 </template>
@@ -13,27 +13,18 @@ import {eventBus} from '../main.js';
 export default {
   name: 'companies-list',
   props: ['companies'],
-  date () {
+  data () {
     return {
-      selectedCompany: ''
+      selectedCompany: null
     }
   },
   methods: {
-    getCompanyDetail() {
-      fetch('https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=' + symbol + key)
-      .then(res => res.json())
-      .then(companies => {
-        this.companies = companies
-      })
-    },
     handleClick() {
-      eventBus.$emit('selected-company', this.companies[this['Symbol']]);
+      eventBus.$emit('selected-company', this.selectedCompany);
     }
-  },
-  mounted() {
-
   }
 }
+
 </script>
 
 <style lang="css" scoped>

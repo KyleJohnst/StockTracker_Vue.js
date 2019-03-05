@@ -2,6 +2,7 @@
   <div v-if='company'>
     <h2>Name: {{ company['Name'] }}</h2>
     <p>Symbol: {{ company['Symbol'] }}</p>
+    <p>Sector: {{ company['Sector'] }}</p>
   </div>
 </template>
 
