@@ -17,8 +17,6 @@ export default {
   props: ['company'],
   data() {
     return {
-      // stockName: null,
-      // closingPrice: null,
       quantity: 1
     }
   },

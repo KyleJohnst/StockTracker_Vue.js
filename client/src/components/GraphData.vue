@@ -26,9 +26,22 @@ export default {
       chartOptions: {
         width: 1000,
         height: 500,
-        colors: ['red', 'blue', 'green', 'orange'],
+        colors: ['teal', 'slategrey', 'navy', 'ocean'],
         is3D: true,
         title: 'Stock Holdings',
+        titlePosition: 'center',
+        titleTextStyle: {
+          bold: true,
+          italic: true,
+          fontSize: 22,
+        },
+        legend: {
+          position: "top",
+          alignment: "center",
+          textStyle: {
+            color: "brown"
+          }
+        }
       }
     }
   },
