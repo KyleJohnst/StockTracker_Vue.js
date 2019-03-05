@@ -1,10 +1,13 @@
 <template>
   <div id="app">
+    <h1>BUY BUY BUY</h1>
     <h1>Welcome to your Stock Portfolio</h1>
     <h2>Select your stock</h2>
+
     <stock-view :stocks="stocks"/>
     <stock-prices />
     <graph-data v-if="groupedTotals" :groupedTotals="groupedTotals"></graph-data>
+
 
   </div>
 </template>
@@ -38,11 +41,10 @@ export default {
     CompanyDetail,
     GraphData
   },
-  mounted(){
-
-  },
   mounted () {
     this.getCompaniesList();
+  },
+  mounted () {
     this.fetchStocks()
     .then(gstock => this.groupEachStock())
     .then(tstock => this.totalEachStock())
@@ -77,6 +79,8 @@ export default {
           ...this.selectedCompany,
           Price: a[finalKey]['4. close']
         };
+        this.currentStockPrice = a[finalKey]['4. close']
+
       })
     },
 
@@ -124,7 +128,7 @@ export default {
           var price = a[finalKey]['4. close']
           var value = price * requestList[stock]
           total += value
-        })
+        });
       }
     }
   }
