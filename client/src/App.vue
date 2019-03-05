@@ -51,10 +51,11 @@ export default {
     eventBus.$on('stock-selected', (apiCall) => {
       this.callStock(apiCall)
     })
+
   },
   methods: {
     fetchStocks(){
-      fetch("http://localhost:3000/api/stocks")
+      return fetch("http://localhost:3000/api/stocks")
       .then(res => res.json())
       .then(stocks => this.stocks = stocks);
     },
@@ -71,6 +72,7 @@ export default {
         };
       })
     },
+
     groupEachStock(){
       var orders = this.stocks;
       function groupBy(objectArray, property) {
@@ -86,6 +88,7 @@ export default {
       var result = groupBy(orders, 'stockName');
       this.groupedStocks = result
     },
+
     totalEachStock(){
       let orders = this.groupedStocks
       let results = {};
