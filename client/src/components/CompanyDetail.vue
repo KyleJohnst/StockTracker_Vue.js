@@ -3,6 +3,7 @@
     <h2>{{ company['Name'] }} ({{ company['Symbol'] }})</h2>
     <p>Sector: {{ company['Sector'] }}</p>
     <p>Current share price: ${{ company['Price'] }}</p>
+    <p>Purchase price: ${{company['Price'] * this.quantity}}</p>
     <button v-on:click="purchaseStockItem" type="button" name="button">Buy</button>
     <input v-model="quantity" type="number" name="" min="1">
   </div>
