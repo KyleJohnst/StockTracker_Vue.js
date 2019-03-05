@@ -3,13 +3,18 @@
     <ul v-for="stock in stocks">
       <li><p>Your {{ stock.stockName }} shareprice is ${{ stock.closingPrice }} and you have {{ stock.quantity }} shares with a total purchase  value of ${{ stock.quantity * stock.closingPrice }}</p></li>
     </ul>
+<<<<<<< HEAD
     <p>Your total Portfolio value is $</p>
+=======
+    <p>Your total Portfolio purchase value was ${{totalValue}}</p>
+>>>>>>> fix/automate_features
   </div>
 </template>
 
 <script>
 export default {
   name: 'StockView',
+<<<<<<< HEAD
   props: ['stocks', 'groupedTotals'],
   // computed: {
   //   totalValue: function() {
@@ -31,6 +36,18 @@ export default {
       // }
     // }
   // }
+=======
+  props: ['stocks', ],
+  computed: {
+    totalPercentage: function() {
+      let totalPurchase = 0;
+      for (var stock of this.stocks){
+        totalPurchase += stock.quantity * stock.closingPrice
+      }
+      return totalPurchase;
+    }
+  }
+>>>>>>> fix/automate_features
 }
 </script>
 
