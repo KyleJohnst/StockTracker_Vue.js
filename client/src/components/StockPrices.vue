@@ -5,9 +5,6 @@
       <option value="AAPL">Apple Stocks (AAPL)</option>
       <option value="GOOG">Google Stocks (GOOG)</option>
     </select>
-    <div class="">
-
-    </div>
   </div>
 </template>
 
