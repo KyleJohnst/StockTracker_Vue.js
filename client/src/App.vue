@@ -10,7 +10,7 @@
     <button v-on:click="totalEachStock" name="button">GET ME TOTALS!!!</button>
 
     <graph-data v-if="groupedTotals" :groupedTotals="groupedTotals"></graph-data>
-  
+
 
   </div>
 </template>
@@ -60,10 +60,13 @@ export default {
       .then(res => res.json())
       .then(result => {
         var a = result['Time Series (Daily)']
-        var finalKey = Object.keys(a).pop()
+        var finalKey = Object.keys(a).shift()
         this.currentStockPrice = a[finalKey]['4. close']
+        // var thingy = a[finalKey]['4. close']
+        // console.log(thingy);
       })
     },
+
     groupEachStock(){
       var orders = this.stocks;
       function groupBy(objectArray, property) {
@@ -79,6 +82,7 @@ export default {
       var result = groupBy(orders, 'stockName');
       this.groupedStocks = result
     },
+
     totalEachStock(){
       let orders = this.groupedStocks
       let results = {};
@@ -87,7 +91,29 @@ export default {
         results[key] = orderArray.reduce((runningTotal, order) => { return runningTotal + order.quantity}, 0)
       }
       this.groupedTotals = results
+      console.log(results);
     },
+
+    totalPortfolio(){
+      var total = 0;
+      var requestList = this.groupedTotals;
+
+      for(let stock in requestList) {
+        fetch(`https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${stock}&apikey=JUSZH2FOEHQR49T8`)
+        .then(res => res.json())
+        .then(result => {
+          var a = result['Time Series (Daily)']
+          var finalKey = Object.keys(a).shift()
+          var price = a[finalKey]['4. close']
+          var value = price * requestList[stock]
+          total += value
+          // debugger;
+          console.log(total);
+        })
+      }
+    }
+
+
   }
 }
 
