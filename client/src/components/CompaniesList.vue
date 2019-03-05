@@ -4,6 +4,7 @@
       <option v-for="company in companies" :value="company">{{ company['Name'] + ':' + ' ' + company['Symbol'] }}</option>
     </select>
   </div>
+
 </template>
 
 <script>

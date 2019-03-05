@@ -3,13 +3,13 @@
     <h1>Welcome to your Stock Portfolio</h1>
     <h2>Select a stock</h2>
     <companies-list :companies='companies' />
-    <company-detail :company='selectedCompany' />
+    <company-detail v-on:change="callStock" :company='selectedCompany' />
     <stock-view :stocks='stocks' />
     <stock-prices />
     <button v-on:click="groupEachStock" name="button">GET ME Groups</button>
     <button v-on:click="totalEachStock" name="button">GET ME TOTALS!!!</button>
-
   </div>
+
 </template>
 
 <script>
@@ -44,6 +44,7 @@ export default {
 
     eventBus.$on('selected-company', (selectedCompany) => {
       this.selectedCompany = selectedCompany
+      this.callStock(selectedCompany)
     }),
     eventBus.$on('stock-selected', (apiCall) => {
       this.callStock(apiCall)
@@ -55,16 +56,17 @@ export default {
       .then(res => res.json())
       .then(stocks => this.stocks = stocks);
     },
-    callStock(apiCall) {
-      this.apiCall = apiCall
-      let stock = this.apiCall
+    callStock(selectedCompany) {
       const key = '&apikey=JUSZH2FOEHQR49T8'
       fetch('https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=' + this.selectedCompany['Symbol'] + key)
       .then(res => res.json())
       .then(result => {
         var a = result['Time Series (Daily)']
-        var finalKey = Object.keys(a).pop()
-        this.currentStockPrice = a[finalKey]['4. close']
+        var finalKey = Object.keys(a).shift()
+        this.selectedCompany = {
+          ...this.selectedCompany,
+          Price: a[finalKey]['4. close']
+        };
       })
     },
     groupEachStock(){
