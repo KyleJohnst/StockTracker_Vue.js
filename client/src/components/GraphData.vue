@@ -1,7 +1,7 @@
 <template lang="html">
   <div id="chart-container">
 
-    <p> {{ createChartData }}</p>
+    <p> {{ createChartData }} </p>
 
     <div class="g-chart">
       <GChart
@@ -32,24 +32,15 @@ export default {
       chartOptions: {
         width: 1000,
         height: 500,
-        colors: ['red', 'blue', 'yellow', 'green'],
+        colors: ['red', 'blue', 'green', 'orange'],
         is3D: true,
         title: 'Stock Holdings',
-        vAxis: { title: 'Quantity' },
-        hAxis: { title: 'xxxxxx'},
-        // legend: 'none',
-        pieSliceText: 'label',
-        slices: {  4: {offset: 0.2},
-        12: {offset: 0.3},
-        14: {offset: 0.4},
-        15: {offset: 0.5},
       }
     }
-  }
-},
-computed: {
-  createChartData(){
-    this.chartData = [["Symbol", "Amount"], ...Object.entries(this.groupedTotals)]
+  },
+  computed: {
+    createChartData(){
+      this.chartData = [["Symbol", "Amount"], ...Object.entries(this.groupedTotals)]
     }
   }
 }

@@ -4,12 +4,13 @@
     <h1>Welcome to your Stock Portfolio</h1>
     <h2>Select your stock</h2>
 
-      <stock-view :stocks="stocks"/>
-      <stock-prices />
-      <button v-on:click="groupEachStock" name="button">GET ME Groups</button>
-      <button v-on:click="totalEachStock" name="button">GET ME TOTALS!!!</button>
-      <!-- <button v-on:click="" name="button">Give me a Graph!</button> -->
-      <graph-data v-if="groupedTotals" :groupedTotals="groupedTotals"></graph-data>
+    <stock-view :stocks="stocks"/>
+    <stock-prices />
+    <button v-on:click="groupEachStock" name="button">GET ME Groups</button>
+    <button v-on:click="totalEachStock" name="button">GET ME TOTALS!!!</button>
+
+    <graph-data v-if="groupedTotals" :groupedTotals="groupedTotals"></graph-data>
+  
 
   </div>
 </template>
@@ -29,7 +30,8 @@ export default {
       apiCall: null,
       currentStockPrice: null,
       groupedTotals: null,
-      groupedStocks: null
+      groupedStocks: null,
+      totalStockValue: []
     }
   },
   components:{
@@ -85,7 +87,7 @@ export default {
         results[key] = orderArray.reduce((runningTotal, order) => { return runningTotal + order.quantity}, 0)
       }
       this.groupedTotals = results
-    }
+    },
   }
 }
 
