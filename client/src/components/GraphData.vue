@@ -32,7 +32,7 @@ export default {
       chartOptions: {
         width: 750,
         height: 400,
-        colors: ['red', 'yellow', 'green', 'blue', 'orchid', 'pink', 'orange', 'skyblue', 'blizzard blue', 'black olive'],
+        colors: ['red', 'yellow', 'green', 'blue', 'orchid', 'pink', 'orange', 'skyblue', 'black'],
         is3D: true,
         pieSliceText: 'percentage',
         titlePosition: 'center',
