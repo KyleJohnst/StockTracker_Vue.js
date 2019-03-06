@@ -32,7 +32,7 @@ export default {
       chartOptions: {
         width: 750,
         height: 400,
-        colors: ['#D62839', '#13D841', '#E7EF00', '#4BA3C3', '#CCE6F4'],
+        colors: ['red', 'yellow', 'green', 'blue', 'orchid', 'pink', 'orange', 'skyblue', 'blizzard blue', 'black olive'],
         is3D: true,
         pieSliceText: 'percentage',
         titlePosition: 'center',
@@ -61,6 +61,4 @@ export default {
 
 <style lang="css" scoped>
 
-#chart-container {
-}
 </style>

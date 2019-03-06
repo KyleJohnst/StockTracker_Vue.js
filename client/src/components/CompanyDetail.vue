@@ -25,7 +25,7 @@ export default {
       const shareToSave = {
         stockName: this.company['Symbol'],
         closingPrice: this.company['Price'],
-        quantity: this.quantity
+        quantity: parseInt(this.quantity)
       }
 
       fetch("http://localhost:3000/api/stocks", {
