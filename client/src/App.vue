@@ -2,7 +2,7 @@
 
   <div id="app">
     <h1>Portfolio Manager</h1>
-    <h1>Welcome to your Stock Portfolio</h1>
+    <h2>Welcome to your Stock Portfolio</h2>
     <h2>Select your stock</h2>
     <companies-list :companies='companies' />
     <company-detail v-on:change="callStock" :company='selectedCompany' />
@@ -161,7 +161,7 @@ div {
 
 h1 {
   font-weight: normal;
-  font-size: 40px;
+  font-size: 36px;
 }
 
 h2, h3 {
