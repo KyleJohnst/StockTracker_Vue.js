@@ -1,4 +1,5 @@
 <template lang="html">
+  <!--THIS IS NO LONGER IN USE BUT MAY BE USEFUL AT A LATER STAGE IF NEEDED  -->
   <!-- <div class=""> -->
     <!-- <select id="stock_select" v-model="apiCall" v-on:change="changeStock" >
       <option value=disabled></option>
@@ -22,7 +23,7 @@ export default {
   },
   methods: {
     changeStock(){
-      // console.log(this.apiCall);
+
       eventBus.$emit('stock-selected', this.apiCall)
     }
   }

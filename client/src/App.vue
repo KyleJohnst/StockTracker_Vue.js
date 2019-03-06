@@ -7,7 +7,6 @@
     <companies-list :companies='companies' />
     <company-detail v-on:change="callStock" :company='selectedCompany' />
     <stock-view v-if="initialValue !== undefined" :stocks='stocks' :totalStockValue="totalStockValue" :initialValue="initialValue"/>
-    <!-- <stock-prices /> -->
     <graph-data v-if="groupedTotals" :groupedTotals="groupedTotals"></graph-data>
   </div>
 </template>
@@ -49,11 +48,7 @@ export default {
     .then(gstock => this.groupEachStock())
     .then(tstock => this.totalEachStock())
     .then(svalue => this.totalPortfolio())
-    .then(vstock => this.fetchTotal())
-    // Promise.all([this.groupEachStock(), this.totalEachStock(), this.totalPortfolio(), this.fetchTotal()])
-    // .then(result => {
-    //   return result
-    // })
+    .then(vstock => this.fetchTotal());
 
     eventBus.$on('selected-company', (selectedCompany) => {
       this.selectedCompany = selectedCompany
@@ -66,6 +61,7 @@ export default {
   },
   methods: {
     fetchStocks(){
+      console.log("fetch stocks went first!");
       return fetch("http://localhost:3000/api/stocks")
       .then(res => res.json())
       .then(stocks => this.stocks = stocks);
@@ -125,34 +121,22 @@ export default {
           var price = a[finalKey]['4. close']
           var value = price * requestList[stock]
           total += value
-          // debugger;
+
           this.totalStockValue = total.toFixed(2)
           console.log(total);
         })
       }
     },
     fetchTotal(){
+      console.log("Fetch total went first");
+
       let value = 0;
       for (let stock of this.stocks){
         value += stock.quantity * stock.closingPrice
       }
-      console.log(value);
+
       this.initialValue = value
     }
-
-    // totalPercentage(totalPortfolio) {
-    //   let initialValue = 0;
-    //   let currentValue = this.totalPortfolio
-    //   for (var stock of this.stocks){
-    //     initialValue += stock.quantity * stock.closingPrice
-    //   }
-    //
-    //   function percentage(initValue, currValue){
-    //     let increase = currValue - initValue
-    //     let x = ((increase / initValue) * 100).toFixed(2)
-    //     console.log(x);
-    //   }
-    // }
 
   }
 }
