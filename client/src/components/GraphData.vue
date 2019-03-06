@@ -1,6 +1,9 @@
 <template lang="html">
-  <div id="chart-container">
+  <div class="item">
+
+    <p>Stock Holdings</p>
     <p> {{ createChartData }} </p>
+
     <div class="g-chart">
       <GChart
       type="PieChart"
@@ -9,10 +12,13 @@
       />
     </div>
   </div>
+
 </template>
+
 <script>
 
 import { Gchart } from 'vue-google-charts';
+
 
 export default {
   name: 'GraphData',
@@ -24,11 +30,11 @@ export default {
     return {
       chartData: [],
       chartOptions: {
-        width: 1000,
-        height: 500,
-        colors: ['teal', 'slategrey', 'navy', 'ocean'],
+        width: 750,
+        height: 400,
+        colors: ['#D62839', '#13D841', '#E7EF00', '#4BA3C3', '#CCE6F4'],
         is3D: true,
-        title: 'Stock Holdings',
+        pieSliceText: 'percentage',
         titlePosition: 'center',
         titleTextStyle: {
           bold: true,
@@ -39,7 +45,7 @@ export default {
           position: "top",
           alignment: "center",
           textStyle: {
-            color: "brown"
+            color: "blue"
           }
         }
       }
@@ -54,4 +60,7 @@ export default {
 </script>
 
 <style lang="css" scoped>
+
+#chart-container {
+}
 </style>

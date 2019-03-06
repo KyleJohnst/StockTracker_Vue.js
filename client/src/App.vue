@@ -1,20 +1,19 @@
 <template>
+
   <div id="app">
-    <h1>BUY BUY BUY</h1>
-    <h1>Welcome to your Stock Portfolio</h1>
-    <h2>Select your stock</h2>
+    <h1>Stock<b>Hog</b></h1>
+    <h2>Welcome to your Stock Portfolio</h2>
+    <h3>Select your stock</h3>
     <companies-list :companies='companies' />
     <company-detail v-on:change="callStock" :company='selectedCompany' />
     <stock-view :stocks='stocks' />
     <stock-prices />
     <graph-data v-if="groupedTotals" :groupedTotals="groupedTotals"></graph-data>
-
-
-
   </div>
 </template>
 
 <script>
+
 import StockView from './components/StockView';
 import StockPrices from './components/StockPrices';
 import CompaniesList from './components/CompaniesList';
@@ -33,7 +32,7 @@ export default {
       groupedStocks: null,
       companies: [],
       selectedCompany: null,
-      totalStockValue: []
+      totalStockValue: [],
     }
   },
   components:{
@@ -81,7 +80,6 @@ export default {
         };
       })
     },
-
     groupEachStock(){
       var orders = this.stocks;
       function groupBy(objectArray, property) {
@@ -97,7 +95,6 @@ export default {
       var result = groupBy(orders, 'stockName');
       this.groupedStocks = result
     },
-
     totalEachStock(){
       let orders = this.groupedStocks
       let results = {};
@@ -112,7 +109,6 @@ export default {
       .then(res => res.json())
       .then(companies => this.companies = companies)
     },
-
     totalPortfolio(){
       var total = 0;
       var requestList = this.groupedTotals;
@@ -141,13 +137,37 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 20px;
-
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
 }
-h1, h2 {
+
+div {
+  align-items: center;
+}
+
+h1 {
   font-weight: normal;
+  font-size: 40px;
+}
+
+h2, h3 {
+  font-weight: normal;
+  margin: 5px;
+}
+
+p {
+  font-weight: bold;
+  font-size: 20px;
+  margin-top: 30px;
+  margin-bottom: 0px;
 }
 ul {
   list-style-type: none;
   padding: 0;
+}
+
+button {
+  color: #4BA3C3;
 }
 </style>
