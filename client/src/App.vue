@@ -1,7 +1,7 @@
 <template>
 
   <div id="app">
-    <h1>POrtfolio Manager</h1>
+    <h1>Portfolio Manager</h1>
     <h1>Welcome to your Stock Portfolio</h1>
     <h2>Select your stock</h2>
     <companies-list :companies='companies' />
@@ -180,7 +180,4 @@ ul {
   padding: 0;
 }
 
-button {
-  color: #4BA3C3;
-}
 </style>
