@@ -1,12 +1,12 @@
 <template>
   <div id="app">
-    <h1>BUY BUY BUY</h1>
+    <h1>POrtfolio Manager</h1>
     <h1>Welcome to your Stock Portfolio</h1>
     <h2>Select your stock</h2>
     <companies-list :companies='companies' />
     <company-detail v-on:change="callStock" :company='selectedCompany' />
-    <stock-view :stocks='stocks' />
-    <stock-prices />
+    <stock-view v-if="initialValue !== undefined" :stocks='stocks' :totalStockValue="totalStockValue" :initialValue="initialValue"/>
+    <!-- <stock-prices /> -->
     <graph-data v-if="groupedTotals" :groupedTotals="groupedTotals"></graph-data>
 
 
@@ -33,7 +33,8 @@ export default {
       groupedStocks: null,
       companies: [],
       selectedCompany: null,
-      totalStockValue: []
+      totalStockValue: 0,
+      initialValue: 0
     }
   },
   components:{
@@ -49,10 +50,11 @@ export default {
     .then(gstock => this.groupEachStock())
     .then(tstock => this.totalEachStock())
     .then(svalue => this.totalPortfolio())
-    Promise.all([this.groupEachStock(), this.totalEachStock(), this.totalPortfolio()])
-    .then(result => {
-      return result
-    })
+    .then(vstock => this.fetchTotal())
+    // Promise.all([this.groupEachStock(), this.totalEachStock(), this.totalPortfolio(), this.fetchTotal()])
+    // .then(result => {
+    //   return result
+    // })
 
     eventBus.$on('selected-company', (selectedCompany) => {
       this.selectedCompany = selectedCompany
@@ -70,7 +72,7 @@ export default {
       .then(stocks => this.stocks = stocks);
     },
     callStock(selectedCompany) {
-      const key = '&apikey=JUSZH2FOEHQR49T8'
+      const key = '&apikey=G0JO6UF2EJDL6UXE'
       fetch('https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=' + this.selectedCompany['Symbol'] + key)
       .then(res => res.json())
       .then(result => {
@@ -127,24 +129,34 @@ export default {
           var price = a[finalKey]['4. close']
           var value = price * requestList[stock]
           total += value
+          // debugger;
           this.totalStockValue = total.toFixed(2)
+          console.log(total);
         })
       }
     },
-
-    totalPercentage(totalPortfolio) {
-      let initialValue = 0;
-      let currentValue = this.totalPortfolio
-      for (var stock of this.stocks){
-        initialValue += stock.quantity * stock.closingPrice
+    fetchTotal(){
+      let value = 0;
+      for (let stock of this.stocks){
+        value += stock.quantity * stock.closingPrice
       }
-
-      function percentage(initValue, currValue){
-        let increase = currValue - initValue
-        let x = ((increase / initValue) * 100).toFixed(2)
-        console.log(x);
-      }
+      console.log(value);
+      this.initialValue = value
     }
+
+    // totalPercentage(totalPortfolio) {
+    //   let initialValue = 0;
+    //   let currentValue = this.totalPortfolio
+    //   for (var stock of this.stocks){
+    //     initialValue += stock.quantity * stock.closingPrice
+    //   }
+    //
+    //   function percentage(initValue, currValue){
+    //     let increase = currValue - initValue
+    //     let x = ((increase / initValue) * 100).toFixed(2)
+    //     console.log(x);
+    //   }
+    // }
 
   }
 }
