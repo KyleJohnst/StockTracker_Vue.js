@@ -4,7 +4,7 @@
     <p>Sector: {{ company['Sector'] }}</p>
     <p>Current share price: ${{ company['Price'] }}</p>
     <p>Purchase price: ${{company['Price'] * this.quantity}}</p>
-    <button v-on:click="purchaseStockItem" type="button" name="button">Buy</button>
+    <button class="btn" v-on:click="purchaseStockItem" type="button" name="button">Buy</button>
     <input v-model="quantity" type="number" name="" min="1">
   </div>
 </template>
@@ -44,5 +44,12 @@ export default {
 </script>
 
 <style lang="css" scoped>
-
+.btn {
+  width: 45px;
+  padding: 2px;
+  color: #eee;
+  font-size: 16px;
+  border-radius: 3px;
+  background-color: #333;
+}
 </style>
