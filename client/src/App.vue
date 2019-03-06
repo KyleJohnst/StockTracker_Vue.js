@@ -2,11 +2,7 @@
 
   <div id="app">
     <h1>Portfolio Manager</h1>
-<<<<<<< HEAD
     <h1>Welcome to your Stock Portfolio</h1>
-=======
-    <h2>Welcome to your Stock Portfolio</h2>
->>>>>>> cb4543e8104d48ae51ac4d234040dac21e741339
     <h2>Select your stock</h2>
     <companies-list :companies='companies' />
     <company-detail v-on:change="callStock" :company='selectedCompany' />
