@@ -1,11 +1,11 @@
 <template lang="html">
-  <div class="">
-    <select id="stock_select" v-model="apiCall" v-on:change="changeStock" >
+  <!-- <div class=""> -->
+    <!-- <select id="stock_select" v-model="apiCall" v-on:change="changeStock" >
       <option value=disabled></option>
       <option value="AAPL">Apple Stocks (AAPL)</option>
       <option value="GOOG">Google Stocks (GOOG)</option>
-    </select>
-  </div>
+    </select> -->
+  <!-- </div> -->
 </template>
 
 <script>

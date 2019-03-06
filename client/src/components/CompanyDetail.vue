@@ -1,5 +1,5 @@
 <template lang="html">
-  <div v-if='company'>
+  <div class="item"v-if='company'>
     <h2>{{ company['Name'] }} ({{ company['Symbol'] }})</h2>
     <p>Sector: {{ company['Sector'] }}</p>
     <p>Current share price: ${{ company['Price'] }}</p>
@@ -25,7 +25,7 @@ export default {
       const shareToSave = {
         stockName: this.company['Symbol'],
         closingPrice: this.company['Price'],
-        quantity: this.quantity
+        quantity: parseInt(this.quantity)
       }
 
       fetch("http://localhost:3000/api/stocks", {
@@ -44,4 +44,5 @@ export default {
 </script>
 
 <style lang="css" scoped>
+
 </style>
