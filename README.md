@@ -1,6 +1,7 @@
 # Stocks tracking app
 
 > A Vue.js project to track stocks.
+> Makes use of Vue.js, MongoDB, and JavaScript.
 
 ## Build Setup
 
