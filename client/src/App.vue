@@ -4,7 +4,7 @@
     <h1>Portfolio Manager</h1>
     <h1>Welcome to your Stock Portfolio</h1>
     <h2>Select your stock</h2>
-    <companies-list :companies='companies' />
+    <companies-list  />
     <company-detail v-on:change="callStock" :company='selectedCompany' />
     <stock-view v-if="initialValue !== undefined" :stocks='stocks' :totalStockValue="totalStockValue" :initialValue="initialValue"/>
     <graph-data v-if="groupedTotals" :groupedTotals="groupedTotals"></graph-data>
@@ -25,7 +25,7 @@ export default {
   data () {
     return {
       stocks: [],
-      apiCall: null,
+      // apiCall: null,
       currentStockPrice: null,
       groupedTotals: null,
       groupedStocks: null,
@@ -61,7 +61,7 @@ export default {
   },
   methods: {
     fetchStocks(){
-      console.log("fetch stocks went first!");
+
       return fetch("http://localhost:3000/api/stocks")
       .then(res => res.json())
       .then(stocks => this.stocks = stocks);
@@ -128,13 +128,13 @@ export default {
           total += value
 
           this.totalStockValue = total.toFixed(2)
-          console.log(total);
+          // console.log(total);
         })
       }
     },
 
     fetchTotal(){
-      console.log("Fetch total went first");
+
 
       let value = 0;
       for (let stock of this.stocks){
