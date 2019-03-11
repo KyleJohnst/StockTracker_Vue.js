@@ -29,7 +29,7 @@ export default {
       currentStockPrice: null,
       groupedTotals: null,
       groupedStocks: null,
-      companies: [],
+      // companies: [],
       selectedCompany: null,
       totalStockValue: 0,
       initialValue: 0
@@ -43,7 +43,7 @@ export default {
     GraphData
   },
   mounted () {
-    this.getCompaniesList();
+    // this.getCompaniesList();
     this.fetchStocks()
     .then(gstock => this.groupEachStock())
     .then(tstock => this.totalEachStock())
@@ -66,6 +66,7 @@ export default {
       .then(res => res.json())
       .then(stocks => this.stocks = stocks);
     },
+
     callStock(selectedCompany) {
       const key = '&apikey=G0JO6UF2EJDL6UXE'
       fetch('https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=' + this.selectedCompany['Symbol'] + key)
@@ -79,6 +80,7 @@ export default {
         };
       })
     },
+
     groupEachStock(){
       var orders = this.stocks;
       function groupBy(objectArray, property) {
@@ -94,6 +96,7 @@ export default {
       var result = groupBy(orders, 'stockName');
       this.groupedStocks = result
     },
+
     totalEachStock(){
       let orders = this.groupedStocks
       let results = {};
@@ -103,11 +106,13 @@ export default {
       }
       this.groupedTotals = results
     },
-    getCompaniesList() {
-      fetch('https://pkgstore.datahub.io/core/s-and-p-500-companies/constituents_json/data/64dd3e9582b936b0352fdd826ecd3c95/constituents_json.json')
-      .then(res => res.json())
-      .then(companies => this.companies = companies)
-    },
+
+    // getCompaniesList() {
+    //   fetch('https://pkgstore.datahub.io/core/s-and-p-500-companies/constituents_json/data/64dd3e9582b936b0352fdd826ecd3c95/constituents_json.json')
+    //   .then(res => res.json())
+    //   .then(companies => this.companies = companies)
+    // },
+
     totalPortfolio(){
       var total = 0;
       var requestList = this.groupedTotals;
@@ -127,6 +132,7 @@ export default {
         })
       }
     },
+
     fetchTotal(){
       console.log("Fetch total went first");
 

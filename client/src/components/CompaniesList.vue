@@ -10,19 +10,30 @@
 <script>
 import CompanyDetail from './CompanyDetail';
 import {eventBus} from '../main.js';
+import Dropdown from 'vue-simple-search-dropdown';
 
 export default {
   name: 'companies-list',
   props: ['companies'],
   data () {
     return {
-      selectedCompany: null
+      selectedCompany: null,
+      companies: [],
     }
   },
   methods: {
+    getCompaniesList() {
+      fetch('https://pkgstore.datahub.io/core/s-and-p-500-companies/constituents_json/data/64dd3e9582b936b0352fdd826ecd3c95/constituents_json.json')
+      .then(res => res.json())
+      .then(companies => this.companies = companies)
+    },
+
     handleClick() {
       eventBus.$emit('selected-company', this.selectedCompany);
     }
+  },
+  mounted(){
+    this.getCompaniesList();
   }
 }
 

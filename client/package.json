@@ -11,7 +11,8 @@
   },
   "dependencies": {
     "vue": "^2.5.11",
-    "vue-google-charts": "^0.3.2"
+    "vue-google-charts": "^0.3.2",
+    "vue-simple-search-dropdown": "^1.0.0"
   },
   "browserslist": [
     "> 1%",
