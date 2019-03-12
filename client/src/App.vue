@@ -128,8 +128,6 @@ export default {
     },
 
     fetchTotal(){
-
-
       let value = 0;
       for (let stock of this.stocks){
         value += stock.quantity * stock.closingPrice

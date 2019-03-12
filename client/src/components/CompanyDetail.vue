@@ -1,6 +1,6 @@
 <template lang="html">
   <div class="item"v-if='company'>
-    <h2>{{ company['name'] }} ({{ company['id'] }})</h2>
+    <h2>{{ company['name'] }} </h2>
     <!-- <p>Sector: {{ company['Sector'] }}</p> -->
     <p>Current share price: ${{ company['Price'] }}</p>
     <p>Purchase price: ${{company['Price'] * this.quantity}}</p>

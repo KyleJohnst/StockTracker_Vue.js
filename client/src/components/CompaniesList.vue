@@ -44,7 +44,7 @@ export default {
       })
     },
 
-    buildStockKeys() {
+    searchKeys() {
       if (this.companies) {
         this.searchResult=this.companies.filter((key) => ((key["Name"].toLowerCase().includes(this.search_box.toLowerCase())) || (d["Symbol"].toLowerCase().includes(this.search_box.toLowerCase()))));
       } else {
@@ -53,7 +53,6 @@ export default {
     },
 
     selectStock(selected) {
-      console.log(selected["id"]);
   if (selected["id"]){
     if (this.currentCompany!=selected){
       const companyIndex = this.companies.findIndex(s => s["Symbol"]==selected["id"])
