@@ -1,7 +1,7 @@
 <template lang="html">
   <div class="item"v-if='company'>
-    <h2>{{ company['Name'] }} ({{ company['Symbol'] }})</h2>
-    <p>Sector: {{ company['Sector'] }}</p>
+    <h2>{{ company['name'] }} ({{ company['id'] }})</h2>
+    <!-- <p>Sector: {{ company['Sector'] }}</p> -->
     <p>Current share price: ${{ company['Price'] }}</p>
     <p>Purchase price: ${{company['Price'] * this.quantity}}</p>
     <button class="btn" v-on:click="purchaseStockItem" type="button" name="button">Buy</button>
@@ -23,7 +23,7 @@ export default {
   methods: {
     purchaseStockItem(){
       const shareToSave = {
-        stockName: this.company['Symbol'],
+        stockName: this.company['id'],
         closingPrice: this.company['Price'],
         quantity: parseInt(this.quantity)
       }

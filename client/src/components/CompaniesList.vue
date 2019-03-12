@@ -9,8 +9,7 @@
   id="searchBox"
   :options="stockKeys"
   :disabled="false"
-  :v-on:selected="selectStock"
-  :v-model="selectedCompany"
+  v-on:selected="selectStock"
   placeholder="Search for company here">
 </Dropdown>
 </div>
@@ -30,7 +29,8 @@ export default {
 
       companies: [],
       stockKeys: [],
-      currentCompany: ""
+      currentCompany: null,
+      searchResult: []
 
     }
   },
@@ -38,23 +38,34 @@ export default {
     getCompaniesList() {
       fetch('https://pkgstore.datahub.io/core/s-and-p-500-companies/constituents_json/data/64dd3e9582b936b0352fdd826ecd3c95/constituents_json.json')
       .then(res => res.json())
-      // .then(companies => this.companies = companies)
       .then(res => {
         this.companies=res
         this.stockKeys=this.companies=this.formatSymbols(res)
       })
     },
-    
+
     buildStockKeys() {
-      if (this.allSymbols) {
-        this.stockKeys=this.companies.filter((d) => ((d["Name"].toLowerCase().includes(this.search_box.toLowerCase())) || (d["Symbol"].toLowerCase().includes(this.search_box.toLowerCase()))));
+      if (this.companies) {
+        this.searchResult=this.companies.filter((key) => ((key["Name"].toLowerCase().includes(this.search_box.toLowerCase())) || (d["Symbol"].toLowerCase().includes(this.search_box.toLowerCase()))));
       } else {
-        this.stockKeys=[];
+        this.searchResult=[];
       }
     },
 
+    selectStock(selected) {
+      console.log(selected["id"]);
+  if (selected["id"]){
+    if (this.currentCompany!=selected){
+      const companyIndex = this.companies.findIndex(s => s["Symbol"]==selected["id"])
+      const stock= selected
+      eventBus.$emit('selected-company', stock)
+      this.currentCompany=selected;
+    }
+  }
+},
+
     formatSymbols(companies){
-      return companies.map(company => {return {"id": company["Symbol"], "name": (company["Symbol"]+" : "+company["Name"])}})
+      return companies.map(company => {return {"id": company["Symbol"], "name": (company["Name"]+" : "+ company["Symbol"]) }})
     },
   },
 
@@ -69,17 +80,6 @@ export default {
 </script>
 
 <style lang="css" scoped>
-/* .stocksList {
-position: relative;
-display: inline-block;
-background-color: #eee;
-width: 250px;
-height: 20px;
-box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-padding: 12px 16px;
-z-index: 1;
-} */
-
 #stocksList {
   display: flex;
   flex-wrap: wrap;

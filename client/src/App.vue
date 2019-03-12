@@ -30,7 +30,7 @@ export default {
       groupedTotals: null,
       groupedStocks: null,
       // companies: [],
-      selectedCompany: null,
+      selectedCompany: "",
       totalStockValue: 0,
       initialValue: 0
     }
@@ -69,7 +69,8 @@ export default {
 
     callStock(selectedCompany) {
       const key = '&apikey=G0JO6UF2EJDL6UXE'
-      fetch('https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=' + this.selectedCompany['Symbol'] + key)
+      const stock = this.selectedCompany.id
+      fetch('https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=' + stock + key)
       .then(res => res.json())
       .then(result => {
         var a = result['Time Series (Daily)']
@@ -107,12 +108,6 @@ export default {
       this.groupedTotals = results
     },
 
-    // getCompaniesList() {
-    //   fetch('https://pkgstore.datahub.io/core/s-and-p-500-companies/constituents_json/data/64dd3e9582b936b0352fdd826ecd3c95/constituents_json.json')
-    //   .then(res => res.json())
-    //   .then(companies => this.companies = companies)
-    // },
-
     totalPortfolio(){
       var total = 0;
       var requestList = this.groupedTotals;
@@ -128,7 +123,6 @@ export default {
           total += value
 
           this.totalStockValue = total.toFixed(2)
-          // console.log(total);
         })
       }
     },
