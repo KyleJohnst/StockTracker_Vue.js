@@ -10,14 +10,16 @@
 <script>
 export default {
   name: 'StockView',
-  props: ['stocks', 'totalStockValue', 'initialValue'],
+  props: ['totalStockValue', 'initialValue'],
   data(){
     return {
-
+      stocks: [],
+      updatedStocks: []
     }
   },
   mounted(){
-
+    this.fetchStocks()
+    .then(upStock => this.fetchCurrentValue());
   },
   computed: {
     getPercentage() {
@@ -29,7 +31,27 @@ export default {
         let x = ((increase / initValue) * 100).toFixed(2)
 
         return x
-
+      }
+    }
+  },
+  methods: {
+    fetchStocks(){
+      return fetch("http://localhost:3000/api/stocks")
+      .then(res => res.json())
+      .then(stocks => this.stocks = stocks);
+    },
+    fetchCurrentValue() {
+      // debugger;
+      const key = '&apikey=G0JO6UF2EJDL6UXE'
+      for(let stock of this.stocks){
+        console.log(stock);
+        fetch('https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=' + stock['stockName'] + key)
+        .then(res => res.json())
+        .then(result => {
+          var a = result['Time Series (Daily)']
+          var finalKey = Object.keys(a).shift()
+          this.stock['Price:']= a[finalKey]['4. close'];
+        })
       }
     }
   }

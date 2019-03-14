@@ -47,7 +47,7 @@ export default {
     this.fetchStocks()
     .then(gstock => this.groupEachStock())
     .then(tstock => this.totalEachStock())
-    .then(svalue => this.totalPortfolio())
+    // .then(svalue => this.totalPortfolio())
     .then(vstock => this.fetchTotal());
 
     eventBus.$on('selected-company', (selectedCompany) => {
